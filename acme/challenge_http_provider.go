@@ -33,7 +33,7 @@ func (c *challengeHTTPProvider) getTokenValue(token, domain string) []byte {
 	operation := func() error {
 		var ok bool
 		if result, ok = account.HTTPChallenge[token][domain]; !ok {
-			return fmt.Errorf("cannot find challenge for token %v", token)
+			return fmt.Errorf("cannot find challenge for token %v (challenge_http_provider.go)", token)
 		}
 		return nil
 	}

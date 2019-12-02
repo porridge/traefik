@@ -49,7 +49,7 @@ func getTokenValue(token, domain string, store Store) []byte {
 	}
 
 	notify := func(err error, time time.Duration) {
-		log.Errorf("Error getting challenge for token retrying in %s", time)
+		log.Errorf("Error getting challenge for token retrying in %s: %v", time, err)
 	}
 
 	ebo := backoff.NewExponentialBackOff()

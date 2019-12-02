@@ -157,6 +157,7 @@ func (s *LocalStore) SaveCertificates(certificates []*Certificate) error {
 
 // GetHTTPChallengeToken Get the http challenge token from the store
 func (s *LocalStore) GetHTTPChallengeToken(token, domain string) ([]byte, error) {
+	log.Debugf("Getting http challenge for token %v domain %v", token, domain)
 	s.lock.RLock()
 	defer s.lock.RUnlock()
 
@@ -165,18 +166,20 @@ func (s *LocalStore) GetHTTPChallengeToken(token, domain string) ([]byte, error)
 	}
 
 	if _, ok := s.storedData.HTTPChallenges[token]; !ok {
-		return nil, fmt.Errorf("cannot find challenge for token %v", token)
+		return nil, fmt.Errorf("cannot find challenge for token %v (local_store.go)", token)
 	}
 
 	result, ok := s.storedData.HTTPChallenges[token][domain]
 	if !ok {
-		return nil, fmt.Errorf("cannot find challenge for token %v", token)
+		return nil, fmt.Errorf("cannot find challenge for token %v, domain %v (local_store.go)", token, domain)
 	}
 	return result, nil
 }
 
 // SetHTTPChallengeToken Set the http challenge token in the store
 func (s *LocalStore) SetHTTPChallengeToken(token, domain string, keyAuth []byte) error {
+	log.Debugf("Setting http challenge for token %v domain %v", token, domain)
+	defer log.Debugf("Set http challenge for token %v domain %v", token, domain)
 	s.lock.Lock()
 	defer s.lock.Unlock()
 
