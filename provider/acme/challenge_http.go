@@ -21,7 +21,7 @@ type challengeHTTP struct {
 
 // Present presents a challenge to obtain new ACME certificate
 func (c *challengeHTTP) Present(domain, token, keyAuth string) error {
-	const delayDuration = 10 * time.Second
+	const delayDuration = 20 * time.Second
 	log.Warnf("Sleeping for %v to give loadbalancer a chance to become healthy...", delayDuration)
 	time.Sleep(delayDuration)
 	log.Warnf("Storing HTTP challenge token %s.", token)
